@@ -1,0 +1,526 @@
+/* Knowledge Inbox — unified capture modal */
+
+.modal.knowledge-inbox-modal-shell {
+	width: min(560px, calc(100vw - 32px));
+	max-width: calc(100vw - 32px);
+}
+
+.knowledge-inbox-capture-modal {
+	width: 100%;
+	min-width: 0;
+	box-sizing: border-box;
+	overflow-x: hidden;
+	padding: 8px;
+}
+
+.knowledge-inbox-capture-modal h2 {
+	margin-bottom: 16px;
+}
+
+.knowledge-inbox-capture-tabs {
+	display: grid;
+	grid-template-columns: 1fr 1fr;
+	width: 100%;
+	min-width: 0;
+	gap: 8px;
+	margin-bottom: 16px;
+}
+
+.knowledge-inbox-capture-tabs button {
+	width: 100%;
+	min-width: 0;
+}
+
+.knowledge-inbox-capture-tabs button.is-active {
+	background: var(--interactive-accent);
+	color: var(--text-on-accent);
+}
+
+.knowledge-inbox-write-mode {
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	flex-wrap: wrap;
+	gap: 12px;
+	margin-bottom: 16px;
+}
+
+.knowledge-inbox-write-mode select {
+	min-width: 160px;
+	max-width: 100%;
+	flex: 1 1 200px;
+}
+
+.knowledge-inbox-capture-panel {
+	display: flex;
+	flex-direction: column;
+	min-width: 0;
+	gap: 12px;
+}
+
+.knowledge-inbox-recording-status {
+	color: var(--text-muted);
+	text-align: center;
+}
+
+.knowledge-inbox-recording-timer {
+	font-family: var(--font-monospace);
+	font-size: 2.4em;
+	font-weight: 700;
+	text-align: center;
+}
+
+.knowledge-inbox-audio-file-input {
+	display: none;
+}
+
+.knowledge-inbox-format-hint {
+	margin: 0;
+	text-align: center;
+}
+
+.knowledge-inbox-field-label {
+	font-weight: 600;
+}
+
+.knowledge-inbox-source-select,
+.knowledge-inbox-text-input {
+	width: 100%;
+	min-width: 0;
+	box-sizing: border-box;
+}
+
+.knowledge-inbox-process-toggle {
+	display: flex;
+	align-items: center;
+	gap: 8px;
+	color: var(--text-muted);
+}
+
+.knowledge-inbox-text-input {
+	min-height: 220px;
+	resize: vertical;
+}
+
+.knowledge-inbox-capture-actions {
+	display: flex;
+	justify-content: flex-end;
+	flex-wrap: wrap;
+	gap: 8px;
+	margin-top: 8px;
+}
+
+.knowledge-inbox-capture-actions button {
+	max-width: 100%;
+}
+
+.modal.knowledge-inbox-preview-shell {
+	width: min(760px, calc(100vw - 24px));
+	max-width: calc(100vw - 24px);
+	height: min(860px, calc(100vh - 24px));
+	max-height: calc(100vh - 24px);
+	overflow: hidden;
+}
+
+.knowledge-inbox-preview-modal {
+	display: flex;
+	flex-direction: column;
+	gap: 10px;
+	width: 100%;
+	height: 100%;
+	min-width: 0;
+	min-height: 0;
+	max-width: 100%;
+	box-sizing: border-box;
+	overflow: hidden;
+}
+
+.knowledge-inbox-preview-modal input,
+.knowledge-inbox-preview-modal select,
+.knowledge-inbox-preview-content {
+	width: 100%;
+	min-width: 0;
+	max-width: 100%;
+	box-sizing: border-box;
+}
+
+.knowledge-inbox-preview-content {
+	flex: 1 1 160px;
+	min-height: 80px;
+	overflow-y: auto;
+	overflow-x: hidden;
+	overflow-wrap: anywhere;
+	white-space: pre-wrap;
+	resize: none;
+}
+
+.knowledge-inbox-preview-modal > .knowledge-inbox-capture-actions {
+	flex: 0 0 auto;
+	width: 100%;
+	margin-top: auto;
+	padding-top: 8px;
+	background: var(--background-primary);
+}
+
+.modal.knowledge-inbox-profile-shell {
+	width: min(780px, calc(100vw - 24px));
+	max-width: calc(100vw - 24px);
+	height: min(900px, calc(100vh - 24px));
+	max-height: calc(100vh - 24px);
+	overflow: hidden;
+}
+
+.knowledge-inbox-profile-modal {
+	width: 100%;
+	height: 100%;
+	min-width: 0;
+	min-height: 0;
+	max-width: 100%;
+	box-sizing: border-box;
+	overflow-y: auto;
+	overflow-x: hidden;
+	padding-right: 8px;
+	container-type: inline-size;
+}
+
+.knowledge-inbox-profile-modal .setting-item {
+	min-width: 0;
+}
+
+.knowledge-inbox-settings .setting-item-heading,
+.knowledge-inbox-profile-modal .setting-item-heading {
+	margin-top: 30px;
+	margin-bottom: 14px;
+	padding: 12px 14px;
+	border-top: 1px solid var(--background-modifier-border);
+	border-left: 4px solid var(--interactive-accent);
+	border-radius: var(--radius-s);
+	background: var(--background-secondary);
+}
+
+.knowledge-inbox-settings .setting-item-heading:first-of-type,
+.knowledge-inbox-profile-modal .setting-item-heading:first-of-type {
+	margin-top: 18px;
+}
+
+.knowledge-inbox-settings .setting-item-heading .setting-item-name,
+.knowledge-inbox-profile-modal .setting-item-heading .setting-item-name {
+	font-size: 1.15em;
+	font-weight: 700;
+	line-height: 1.4;
+}
+
+.knowledge-inbox-profile-modal .setting-item-heading + .setting-item-description {
+	margin: -2px 4px 16px;
+	padding: 0 8px;
+}
+
+.knowledge-inbox-settings .setting-item:not(.setting-item-heading),
+.knowledge-inbox-profile-modal .setting-item:not(.setting-item-heading) {
+	display: grid;
+	grid-template-columns: minmax(0, 1fr) minmax(0, 0.75fr);
+	align-items: start;
+	column-gap: 24px;
+	row-gap: 8px;
+}
+
+.knowledge-inbox-settings .setting-item-info,
+.knowledge-inbox-profile-modal .setting-item-info {
+	width: auto;
+	min-width: 0;
+}
+
+.knowledge-inbox-profile-modal .setting-item-control {
+	min-width: 0;
+	max-width: 100%;
+	width: 100%;
+	justify-self: end;
+	justify-content: flex-end;
+	flex-wrap: wrap;
+	gap: 8px;
+}
+
+.knowledge-inbox-profile-modal input,
+.knowledge-inbox-profile-modal textarea,
+.knowledge-inbox-profile-modal select {
+	min-width: 0;
+	max-width: 100%;
+	box-sizing: border-box;
+}
+
+.knowledge-inbox-routes {
+	display: flex;
+	flex-direction: column;
+	gap: 12px;
+	margin-bottom: 12px;
+}
+
+.knowledge-inbox-route-card {
+	padding: 12px;
+	border: 1px solid var(--background-modifier-border);
+	border-radius: var(--radius-m);
+	background: var(--background-secondary);
+}
+
+.knowledge-inbox-prompt-card {
+	margin-bottom: 12px;
+	padding: 10px 12px;
+	border: 1px solid var(--background-modifier-border);
+	border-radius: var(--radius-m);
+	background: var(--background-secondary);
+}
+
+.knowledge-inbox-builtin-prompt {
+	width: 100%;
+	min-height: 180px;
+	box-sizing: border-box;
+	resize: vertical;
+}
+
+.knowledge-inbox-route-header {
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	gap: 12px;
+	margin-bottom: 4px;
+}
+
+.knowledge-inbox-settings .setting-item {
+	min-width: 0;
+}
+
+.knowledge-inbox-settings {
+	container-type: inline-size;
+}
+
+.knowledge-inbox-settings .setting-item-control {
+	min-width: 0;
+	max-width: 100%;
+	width: 100%;
+	justify-self: end;
+	justify-content: flex-end;
+	flex-wrap: wrap;
+	gap: 8px;
+}
+
+.knowledge-inbox-settings input[type="text"],
+.knowledge-inbox-settings input[type="password"] {
+	width: 100%;
+	min-width: 0;
+}
+
+.knowledge-inbox-settings .setting-item-control > input,
+.knowledge-inbox-settings .setting-item-control > textarea,
+.knowledge-inbox-settings .setting-item-control > select,
+.knowledge-inbox-profile-modal .setting-item-control > input,
+.knowledge-inbox-profile-modal .setting-item-control > textarea,
+.knowledge-inbox-profile-modal .setting-item-control > select {
+	flex: 1 1 220px;
+}
+
+.modal.knowledge-inbox-content-preview-shell {
+	width: min(720px, calc(100vw - 24px));
+	max-width: calc(100vw - 24px);
+	height: min(760px, calc(100vh - 24px));
+	max-height: calc(100vh - 24px);
+	overflow: hidden;
+}
+
+.knowledge-inbox-content-preview {
+	display: flex;
+	flex-direction: column;
+	gap: 10px;
+	width: 100%;
+	height: 100%;
+	min-width: 0;
+	min-height: 0;
+	overflow: hidden;
+}
+
+.knowledge-inbox-content-preview textarea {
+	flex: 1 1 auto;
+	width: 100%;
+	min-width: 0;
+	min-height: 120px;
+	box-sizing: border-box;
+	overflow-y: auto;
+	overflow-x: hidden;
+	resize: none;
+}
+
+.modal.knowledge-inbox-category-import-shell,
+.modal.knowledge-inbox-task-center-shell {
+	width: min(720px, calc(100vw - 24px));
+	max-width: calc(100vw - 24px);
+	height: min(760px, calc(100vh - 24px));
+	max-height: calc(100vh - 24px);
+	overflow: hidden;
+}
+
+.knowledge-inbox-category-import,
+.knowledge-inbox-task-center {
+	width: 100%;
+	height: 100%;
+	min-width: 0;
+	min-height: 0;
+	box-sizing: border-box;
+	overflow-y: auto;
+	overflow-x: hidden;
+}
+
+.knowledge-inbox-import-list,
+.knowledge-inbox-task-center {
+	display: flex;
+	flex-direction: column;
+	gap: 10px;
+}
+
+.knowledge-inbox-import-item,
+.knowledge-inbox-task-card {
+	padding: 12px;
+	border: 1px solid var(--background-modifier-border);
+	border-radius: var(--radius-m);
+	background: var(--background-secondary);
+}
+
+.knowledge-inbox-import-item p,
+.knowledge-inbox-task-card p {
+	margin: 6px 0;
+}
+
+.knowledge-inbox-task-header {
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	gap: 12px;
+}
+
+.knowledge-inbox-task-status {
+	padding: 2px 8px;
+	border-radius: 999px;
+	background: var(--background-modifier-hover);
+	color: var(--text-muted);
+	font-size: var(--font-ui-smaller);
+}
+
+.knowledge-inbox-task-actions {
+	display: flex;
+	flex-wrap: wrap;
+	justify-content: flex-end;
+	gap: 8px;
+	margin-top: 10px;
+}
+
+.knowledge-inbox-task-card code {
+	display: block;
+	max-width: 100%;
+	overflow-wrap: anywhere;
+	white-space: normal;
+}
+
+@container (max-width: 540px) {
+	.knowledge-inbox-settings .setting-item:not(.setting-item-heading),
+	.knowledge-inbox-profile-modal .setting-item:not(.setting-item-heading) {
+		grid-template-columns: 1fr;
+		column-gap: 0;
+	}
+
+	.knowledge-inbox-settings .setting-item-control,
+	.knowledge-inbox-profile-modal .setting-item-control {
+		justify-self: stretch;
+		justify-content: flex-start;
+	}
+}
+
+@media (max-width: 600px) {
+	.knowledge-inbox-capture-modal {
+		width: 100%;
+	}
+
+	.knowledge-inbox-text-input {
+		min-height: 40vh;
+	}
+
+	.knowledge-inbox-preview-modal {
+		width: 100%;
+	}
+
+	.knowledge-inbox-profile-modal {
+		width: 100%;
+	}
+
+	.knowledge-inbox-route-card .setting-item {
+		display: grid;
+		grid-template-columns: 1fr;
+	}
+
+	.knowledge-inbox-settings .setting-item:not(.setting-item-heading),
+	.knowledge-inbox-profile-modal .setting-item:not(.setting-item-heading) {
+		grid-template-columns: 1fr;
+		column-gap: 0;
+	}
+
+	.knowledge-inbox-settings .setting-item-control,
+	.knowledge-inbox-profile-modal .setting-item-control {
+		justify-self: stretch;
+		justify-content: flex-start;
+	}
+
+	.knowledge-inbox-route-card input,
+	.knowledge-inbox-route-card textarea {
+		width: 100%;
+	}
+
+	.knowledge-inbox-capture-actions {
+		display: grid;
+		grid-template-columns: 1fr;
+	}
+
+	.knowledge-inbox-task-actions {
+		display: grid;
+		grid-template-columns: 1fr;
+	}
+}
+
+/* Settings */
+.audio-inbox-guide {
+	background: var(--background-secondary);
+	border-radius: 10px;
+	padding: 12px 16px;
+	margin-bottom: 16px;
+	line-height: 1.7;
+}
+
+/* ---- FAB — mobile only, draggable ---- */
+.ai-fab {
+	position: fixed;
+	bottom: 28px;
+	right: 20px;
+	z-index: 999;
+	width: 60px;
+	height: 60px;
+	border-radius: 50%;
+	background: var(--interactive-accent);
+	box-shadow: 0 4px 16px rgba(0,0,0,0.3);
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	cursor: grab;
+	transition: box-shadow 0.2s;
+	-webkit-tap-highlight-color: transparent;
+	touch-action: none;
+}
+.ai-fab:active {
+	box-shadow: 0 6px 20px rgba(0,0,0,0.4);
+	cursor: grabbing;
+}
+.ai-fab-dragged {
+	right: auto;
+	bottom: auto;
+}
+.ai-fab-icon {
+	font-size: 28px;
+	line-height: 1;
+	user-select: none;
+	pointer-events: none;
+}

@@ -1,0 +1,33 @@
+{
+  "name": "obsidian-knowledge-inbox",
+  "version": "0.1.0",
+  "description": "Capture voice or text, organize it with AI, and route structured notes across an Obsidian vault.",
+  "main": "main.js",
+  "scripts": {
+    "dev": "node esbuild.config.js",
+    "build": "tsc -noEmit -skipLibCheck && node esbuild.config.js production",
+    "test": "vitest run",
+    "test:watch": "vitest"
+  },
+  "keywords": [
+    "obsidian",
+    "plugin",
+    "voice",
+    "text",
+    "capture",
+    "transcription",
+    "stt",
+    "ai",
+    "knowledge-management"
+  ],
+  "author": "HortenseJ",
+  "license": "GPL-3.0-or-later",
+  "devDependencies": {
+    "@types/node": "^20.0.0",
+    "esbuild": "^0.28.2",
+    "obsidian": "latest",
+    "tslib": "^2.6.0",
+    "typescript": "^5.0.0",
+    "vitest": "^4.1.10"
+  }
+}

@@ -1,0 +1,119 @@
+# Changelog
+
+## [0.1.0] - Unreleased
+
+### Project foundation
+
+- License Knowledge Inbox 0.1.0 and later under GPL-3.0-or-later while preserving the upstream Audio Inbox MIT notice.
+- Fork Audio Inbox under the MIT License.
+- Rename the plugin to Knowledge Inbox.
+- Establish independent package and plugin identifiers.
+- Preserve the upstream baseline before architectural refactoring.
+- Add a unified audio and text capture window.
+- Save written text and external transcripts to a configurable raw folder.
+- Save STT output to a configurable transcription folder before LLM processing.
+- Support vault-selected templates for raw text and transcription notes.
+- Keep source audio by default and preserve it after any incomplete write.
+- Store API keys through Obsidian SecretStorage and remove migrated plaintext keys from `data.json`.
+- Require Obsidian 1.11.4 or newer for the SecretStorage API.
+- Organize written text and external transcripts with source-specific prompts.
+- Validate structured AI results before writing a managed draft to raw notes.
+- Support automatic text organization and a manual “organize selected text” command.
+- Load non-sensitive routes, prompt paths, templates, and metadata fields from a syncable vault profile.
+- Restrict LLM classification to configured category IDs and trusted target folders.
+- Support preview confirmation or automatic wiki writing with per-route templates.
+- Route audio transcriptions and imported audio through the same raw-to-wiki pipeline.
+- Add a mobile-friendly graphical editor for prompts, metadata fields, routes, folders, templates, and filename patterns.
+- Distinguish recommended audio imports from device-dependent compatibility attempts and enforce the default provider's 50MB limit.
+- Extract transcript text from SiliconFlow JSON responses instead of saving the JSON wrapper.
+- Let users choose built-in, inline, or vault-file prompts and display built-in rules in the setup guide.
+- Support Chinese category names and explain category descriptions as AI classification rules.
+- Add built-in raw, transcription, and wiki template previews.
+- Append content automatically when a custom template omits an insertion marker.
+- Hide JSON creation details behind a single beginner-friendly setup guide.
+- Make category cards the sole classification source and add one-time AI extraction from a vault prompt with confirmation.
+- Add a per-device persistent processing queue with restart recovery, pause, retry, cancel, review, and task-center actions.
+- Persist planned raw/wiki paths to avoid duplicate files after restart and keep cancelled source audio.
+- Bound terminal job history and remove large payloads from completed/cancelled tasks.
+- Use container-aware settings grids to prevent overlap in narrow panes.
+- Present SiliconFlow/SenseVoiceSmall and DeepSeek as replaceable defaults, with provider-neutral settings and errors.
+- Add regression tests for AI parsing, filenames, templates, raw text, and source retention.
+
+### Upstream Audio Inbox history
+
+## [2.5.0] - 2026-07-11
+
+### 🗂️ 四级目录结构重构
+彻底告别"一个日期一个文件"的旧模式。新的文件组织方式：
+- **VoiceNotes/** — 一级根目录
+- **2026-07/** — 二级月份文件夹
+- **2026-07-11/** — 三级日期文件夹
+- **一元线性回归.md** — 四级单个事件文件
+
+每个备忘/待办都是独立文件，不再追加合并。碰撞自动加时间后缀。
+
+### 🧹 代码优化
+- 移除废弃的 `saveNote` 和 `saveToShortcutsFolder` 函数
+- 提取 `datePath()` 统一日期路径计算
+- `markTodosDone` 改为递归扫描所有待办文件
+
+## [2.4.1] - 2026-07-11
+
+### 🏷️ AI 智能标题命名
+文件名不再只截取前18个字。AI 会根据笔记内容自动生成不超过10个字的简洁标题（如"一元线性回归""明天下午开会""星露谷物语鱼竿"），文件自动命名为 `日期-标题.md`。
+
+### 🐛 修复：DeepSeek 同一行标题不生效
+DeepSeek 有时会把标题和分隔符写在同一行（如 `### 标题：总结内容`），导致标题无法提取。现在无论标题在独立一行还是紧跟分隔符，都能正确识别。
+
+## [2.4.0] - 2026-07-01
+
+### 🗂️ 待办事项按日期分文件
+待办事项同步改为按日期存储，文件命名为 `日期-待办-标题.md`，与备忘录保持一致的文件组织结构。
+
+### 📝 智能文件名
+备忘录文件自动包含内容标题（前18字），从 `备忘录-2026-07-01.md` 升级为 `2026-07-01-标题.md`。
+
+## [2.3.0] - 2026-07-01
+
+### 📂 备忘录按日期分文件
+不再将所有备忘录追加到同一个 `备忘录.md`，改为**每天一个独立文件** `备忘录-2026-07-01.md`。同一天的备忘追加到当天文件，方便翻找，不会出现几百行的超长文档。
+
+## [2.2.1] - 2026-06-28
+
+### 🧠 AI 更聪明了
+全新增强版系统提示词，让 DeepSeek **自动修正语音识别错误**：
+- **语义纠错**：同音字、漏字、错别字自动修正（如"1元线行"→"一元线性回归"）
+- **上下文推断**：根据前后文补全不通顺的语句
+- **去噪过滤**：自动忽略语气词、口头禅、重复废话
+- **max_tokens** 从 2000 提升至 3000
+
+即使 STT 识别不完美，AI 也能准确理解你的意思。
+
+## [2.2.0] - 2026-06-28
+
+### 🐛 Critical Bug Fix
+- **Fix: 手机端备忘录内容永远为空** — `parseAIResponse()` 中匹配 `### 备忘内容` 和 `### 总结` 的正则包含 emoji（💭📋），导致匹配永久失败。移除 emoji 后正确提取内容，手机端备忘录功能恢复正常。
+
+### ✨ New Features
+- **处理后自动删除录音** — 新设置开关（默认开启），处理完成后自动删除音频文件节省存储
+- **不再生成独立语音笔记文件** — 录音直接写入 `备忘录.md` / `待办事项.md`
+
+### 🔧 Improvements
+- 强制 Prompt 升级：检测旧版 prompt 自动替换
+- saveMemo 增加 Notices 诊断（📝 正在保存 / ✅ 已追加 / ❌ 错误）
+
+### 🎨 UI Refresh
+- 侧边栏：`mic` → `audio-lines`
+- 悬浮按钮：三圈涟漪白芯 SVG，自适应主题色
+- 设置新增「处理后删除录音文件」开关
+
+### 📖 Docs
+- README 建议录音 5 分钟以内
+
+## [2.1.1] - 2026-06-18
+
+### ✨ Memo Mode — AI 智能区分提醒/备忘，备忘录保存原话+AI总结
+
+## [2.0.5] - 2026-06-17
+
+### 🛡️ Obsidian 社区审核合规修复
