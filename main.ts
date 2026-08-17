@@ -993,7 +993,6 @@ export default class KnowledgeInboxPlugin extends Plugin {
 		let off = 0;
 		for (const p of parts) { body.set(p, off); off += p.length; }
 
-		console.log(`KnowledgeInbox: Sending STT request (${sizeKB}KB, ${finalExt}), API: ${this.settings.sttApiUrl}`);
 
 		const resp = await requestUrl({
 			url: this.settings.sttApiUrl,
@@ -1005,7 +1004,6 @@ export default class KnowledgeInboxPlugin extends Plugin {
 			body: body.buffer,
 		});
 
-		console.log(`KnowledgeInbox: STT response status=${resp.status}, contentType=${resp.headers?.["content-type"] || "?"}`);
 
 		if (resp.status !== 200) {
 			const errStr: string = resp.text || (resp.json ? JSON.stringify(resp.json) : "");
@@ -1024,7 +1022,6 @@ export default class KnowledgeInboxPlugin extends Plugin {
 
 		// Providers may ignore response_format=text and still return {"text":"..."}.
 		const result = parseSttResponse(resp.json, resp.text || "");
-		console.log(`KnowledgeInbox: STT result length=${result.length}, preview="${result.substring(0, 80)}"`);
 		return result;
 	}
 
@@ -1198,12 +1195,47 @@ class KnowledgeInboxSettingTab extends PluginSettingTab {
 	plugin: KnowledgeInboxPlugin;
 	constructor(app: App, plugin: KnowledgeInboxPlugin) { super(app, plugin); this.plugin = plugin; }
 
+	getSettingDefinitions(): { id: string; name: string; desc: string; type: string }[] {
+		return [
+			{
+				id: "inboxFolder",
+				name: "录音文件夹",
+				desc: "录音文件保存的位置",
+				type: "text",
+			},
+			{
+				id: "textInputFolder",
+				name: "文本输入文件夹",
+				desc: "原始文本笔记保存的位置",
+				type: "text",
+			},
+			{
+				id: "transcriptionFolder",
+				name: "语音转写文件夹",
+				desc: "语音转写笔记保存的位置",
+				type: "text",
+			},
+			{
+				id: "autoProcessText",
+				name: "自动整理文本",
+				desc: "文本采集后是否自动调用 AI 整理",
+				type: "toggle",
+			},
+			{
+				id: "deleteAfterProcess",
+				name: "处理后删除录音文件",
+				desc: "处理成功后将原音频移入回收站",
+				type: "toggle",
+			},
+		];
+	}
+
 	display() {
 		const { containerEl } = this;
 		containerEl.empty();
 		containerEl.addClass("knowledge-inbox-settings");
 
-		new Setting(containerEl).setName("Knowledge Inbox 设置").setHeading();
+		new Setting(containerEl).setName("设置").setHeading();
 		new Setting(containerEl)
 			.setName("处理任务")
 			.setDesc("查看等待、处理中、待确认、暂停和失败任务。")
