@@ -54,7 +54,8 @@ export class WikiArtifactWriter {
 
 		if (input.profile.metadataFields.source) {
 			await this.app.fileManager.processFrontMatter(finalFile, (frontmatter) => {
-				frontmatter[input.profile.metadataFields.source] =
+				const fm = frontmatter as Record<string, unknown>;
+				fm[input.profile.metadataFields.source] =
 					`[[${input.sourceRawPath.replace(/\.md$/i, "")}]]`;
 			});
 		}
@@ -64,11 +65,12 @@ export class WikiArtifactWriter {
 			throw new Error(`原稿不存在：${input.sourceRawPath}`);
 		}
 		await this.app.fileManager.processFrontMatter(rawFile, (frontmatter) => {
+			const fm = frontmatter as Record<string, unknown>;
 			if (input.profile.metadataFields.processed) {
-				frontmatter[input.profile.metadataFields.processed] = true;
+				fm[input.profile.metadataFields.processed] = true;
 			}
 			if (input.profile.metadataFields.target) {
-				frontmatter[input.profile.metadataFields.target] = path.replace(/\.md$/i, "");
+				fm[input.profile.metadataFields.target] = path.replace(/\.md$/i, "");
 			}
 		});
 		return path;
@@ -103,7 +105,7 @@ export class WikiArtifactWriter {
 			},
 		});
 		if (template.includes("{{content}}")) return rendered;
-		return `${rendered.trimEnd()}\n\n${this.renderArtifactBody(input.artifact)}\n`;
+		return `${rendered.replace(/\s+$/, "")}\n\n${this.renderArtifactBody(input.artifact)}\n`;
 	}
 
 	/**

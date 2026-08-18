@@ -220,8 +220,7 @@
 	display: grid;
 	grid-template-columns: minmax(0, 1fr) minmax(0, 0.75fr);
 	align-items: start;
-	column-gap: 24px;
-	row-gap: 8px;
+	gap: 8px 24px;
 }
 
 .knowledge-inbox-settings .setting-item-info,
@@ -422,7 +421,6 @@
 	.knowledge-inbox-settings .setting-item:not(.setting-item-heading),
 	.knowledge-inbox-profile-modal .setting-item:not(.setting-item-heading) {
 		grid-template-columns: 1fr;
-		column-gap: 0;
 	}
 
 	.knowledge-inbox-settings .setting-item-control,
@@ -457,7 +455,6 @@
 	.knowledge-inbox-settings .setting-item:not(.setting-item-heading),
 	.knowledge-inbox-profile-modal .setting-item:not(.setting-item-heading) {
 		grid-template-columns: 1fr;
-		column-gap: 0;
 	}
 
 	.knowledge-inbox-settings .setting-item-control,

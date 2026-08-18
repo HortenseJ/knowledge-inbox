@@ -1,7 +1,7 @@
 {
   "id": "knowledge-inbox",
   "name": "Knowledge Inbox",
-  "version": "0.1.1",
+  "version": "0.1.2",
   "minAppVersion": "1.11.4",
   "description": "Capture voice or text, organize it with AI, and route structured notes across your vault.",
   "author": "HortenseJ",

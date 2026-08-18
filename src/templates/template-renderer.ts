@@ -10,11 +10,11 @@ export interface TemplateRenderContext {
 export function formatTemplateDate(date: Date, format: string): string {
 	const tokens: Record<string, string> = {
 		YYYY: date.getFullYear().toString(),
-		MM: (date.getMonth() + 1).toString().padStart(2, "0"),
-		DD: date.getDate().toString().padStart(2, "0"),
-		HH: date.getHours().toString().padStart(2, "0"),
-		mm: date.getMinutes().toString().padStart(2, "0"),
-		ss: date.getSeconds().toString().padStart(2, "0"),
+		MM: ("0" + (date.getMonth() + 1)).slice(-2),
+		DD: ("0" + date.getDate()).slice(-2),
+		HH: ("0" + date.getHours()).slice(-2),
+		mm: ("0" + date.getMinutes()).slice(-2),
+		ss: ("0" + date.getSeconds()).slice(-2),
 	};
 
 	return format.replace(/YYYY|MM|DD|HH|mm|ss/g, (token) => tokens[token]);

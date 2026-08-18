@@ -1,5 +1,16 @@
 # Changelog
 
+## [0.1.2] - 2026-08-18
+
+### Fixes
+
+- Remove debug console logging.
+- Remove the plugin name from the settings heading and implement `getSettingDefinitions()` for Obsidian plugin validation.
+- Replace ES2017+ string methods (`padStart` / `trimEnd`) with broadly supported equivalents so the source passes the Obsidian community lint.
+- Tighten types around Obsidian frontmatter access and remove unnecessary type assertions.
+- Remove control characters from file names without a control-character regex.
+- Replace the `column-gap` property with the `gap` shorthand in `styles.css`.
+
 ## [0.1.0] - Unreleased
 
 ### Project foundation

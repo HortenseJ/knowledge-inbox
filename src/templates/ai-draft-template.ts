@@ -38,7 +38,7 @@ export function upsertAiDraft(note: string, artifact: KnowledgeArtifact): string
 	const end = note.indexOf(AI_DRAFT_END);
 	if (start >= 0 && end >= start) {
 		const afterEnd = end + AI_DRAFT_END.length;
-		return `${note.slice(0, start).trimEnd()}\n\n${draft}${note.slice(afterEnd)}`;
+		return `${note.slice(0, start).replace(/\s+$/, "")}\n\n${draft}${note.slice(afterEnd)}`;
 	}
-	return `${note.trimEnd()}\n\n${draft}\n`;
+	return `${note.replace(/\s+$/, "")}\n\n${draft}\n`;
 }

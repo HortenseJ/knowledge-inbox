@@ -113,29 +113,31 @@ export class ProfileSettingsModal extends Modal {
 	 * Extracts route candidates from a selected vault prompt and previews them.
 	 */
 	private importCategories(button: HTMLButtonElement): void {
-		new VaultMarkdownFileSuggest(this.app, async (file) => {
-			const originalText = button.textContent || "选择提示词并提取";
-			button.disabled = true;
-			button.setText("正在提取…");
-			try {
-				const promptText = await this.app.vault.cachedRead(file);
-				const proposedRoutes = await this.onImportCategories(promptText);
-				new CategoryImportPreviewModal(
-					this.app,
-					this.draft.routes,
-					proposedRoutes,
-					() => {
-						this.draft.routes = proposedRoutes;
-						this.render();
-					},
-				).open();
-			} catch (error) {
-				const message = error instanceof Error ? error.message : String(error);
-				new Notice(`分类提取失败：${message}`, 8000);
-			} finally {
-				button.disabled = false;
-				button.setText(originalText);
-			}
+		new VaultMarkdownFileSuggest(this.app, (file) => {
+			void (async () => {
+				const originalText = button.textContent || "选择提示词并提取";
+				button.disabled = true;
+				button.setText("正在提取…");
+				try {
+					const promptText = await this.app.vault.cachedRead(file);
+					const proposedRoutes = await this.onImportCategories(promptText);
+					new CategoryImportPreviewModal(
+						this.app,
+						this.draft.routes,
+						proposedRoutes,
+						() => {
+							this.draft.routes = proposedRoutes;
+							this.render();
+						},
+					).open();
+				} catch (error) {
+					const message = error instanceof Error ? error.message : String(error);
+					new Notice(`分类提取失败：${message}`, 8000);
+				} finally {
+					button.disabled = false;
+					button.setText(originalText);
+				}
+			})();
 		}).open();
 	}
 

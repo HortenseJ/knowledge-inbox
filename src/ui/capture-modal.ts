@@ -67,7 +67,7 @@ export class CaptureModal extends Modal {
 		writeModeRow.createEl("label", { text: "wiki 写入方式" });
 		const writeModeSelect = writeModeRow.createEl("select", {
 			cls: "dropdown",
-		}) as HTMLSelectElement;
+		});
 		writeModeSelect.createEl("option", { text: "先预览确认", attr: { value: "preview" } });
 		writeModeSelect.createEl("option", { text: "自动写入", attr: { value: "auto" } });
 		writeModeSelect.value = this.writeMode;
@@ -150,7 +150,7 @@ export class CaptureModal extends Modal {
 				type: "file",
 				accept: SUPPORTED_AUDIO_EXTENSIONS.map((extension) => `.${extension}`).join(","),
 			},
-		}) as HTMLInputElement;
+		});
 		fileInput.addClass("knowledge-inbox-audio-file-input");
 		container.createEl("p", {
 			text: "推荐：M4A、MP3、WAV。当前插件上传上限为 50MB；服务商的时长与格式限制请以其文档为准。兼容尝试：OGG、WEBM、AAC、FLAC。",
@@ -207,7 +207,7 @@ export class CaptureModal extends Modal {
 		});
 		const sourceSelect = container.createEl("select", {
 			cls: "dropdown knowledge-inbox-source-select",
-		}) as HTMLSelectElement;
+		});
 		sourceSelect.createEl("option", { text: "书面文本", attr: { value: "written" } });
 		sourceSelect.createEl("option", { text: "外部语音转写", attr: { value: "external-transcript" } });
 
@@ -227,7 +227,7 @@ export class CaptureModal extends Modal {
 		});
 		const processCheckbox = processLabel.createEl("input", {
 			attr: { type: "checkbox" },
-		}) as HTMLInputElement;
+		});
 		processCheckbox.checked = this.defaultAutoProcessText;
 		processLabel.appendText(" 保存后自动整理");
 
@@ -312,8 +312,8 @@ export class CaptureModal extends Modal {
 			stopButton.disabled = false;
 			this.timerId = window.setInterval(() => {
 				const elapsedSeconds = Math.floor((Date.now() - this.startedAt) / 1000);
-				const minutes = Math.floor(elapsedSeconds / 60).toString().padStart(2, "0");
-				const seconds = (elapsedSeconds % 60).toString().padStart(2, "0");
+				const minutes = ("0" + Math.floor(elapsedSeconds / 60)).slice(-2);
+				const seconds = ("0" + (elapsedSeconds % 60)).slice(-2);
 				timer.setText(`${minutes}:${seconds}`);
 			}, 500);
 		} catch (error) {

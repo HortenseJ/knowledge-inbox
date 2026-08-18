@@ -7,8 +7,8 @@ const MAX_CANCELLED_JOBS = 10;
 const MAX_PAUSED_JOBS = 30;
 
 export interface LocalJobStorage {
-	loadLocalStorage(key: string): unknown | null;
-	saveLocalStorage(key: string, data: unknown | null): void;
+	loadLocalStorage(key: string): unknown;
+	saveLocalStorage(key: string, data: unknown): void;
 }
 
 /**
@@ -20,8 +20,8 @@ export class JobRepository {
 	list(): ProcessingJob[] {
 		const loaded = this.storage.loadLocalStorage(JOB_STORAGE_KEY);
 		if (!Array.isArray(loaded)) return [];
-		return loaded.filter((item): item is ProcessingJob =>
-			Boolean(item && typeof item === "object" && typeof item.id === "string"));
+		return (loaded as unknown[]).filter((item): item is ProcessingJob =>
+			typeof item === "object" && item !== null && "id" in item && typeof item.id === "string");
 	}
 
 	get(id: string): ProcessingJob | null {

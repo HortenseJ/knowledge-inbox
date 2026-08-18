@@ -15,7 +15,7 @@ export function renderDefaultTranscriptionTemplate(input: TranscriptionTemplateI
 		"type: transcription",
 		"category: Inbox",
 		"source: audio",
-		`source-audio: \"[[${input.audioPath}]]\"`,
+		`source-audio: "[[${input.audioPath}]]"`,
 		"processed: false",
 		"---",
 		"",

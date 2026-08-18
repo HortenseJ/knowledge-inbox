@@ -43,7 +43,7 @@ export class ArtifactPreviewModal extends Modal {
 		});
 		const routeSelect = this.contentEl.createEl("select", {
 			cls: "dropdown",
-		}) as HTMLSelectElement;
+		});
 		routeSelect.createEl("option", { text: "请选择分类", attr: { value: "" } });
 		for (const route of this.routes) {
 			routeSelect.createEl("option", {

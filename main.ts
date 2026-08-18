@@ -218,11 +218,10 @@ export default class KnowledgeInboxPlugin extends Plugin {
 	async loadSettings(): Promise<void> {
 		const loaded = (await this.loadData() ?? {}) as Record<string, unknown>;
 		const extraction = extractLegacySecrets(loaded);
-		this.settings = Object.assign(
-			{},
-			DEFAULTS,
-			extraction.sanitizedSettings,
-		) as KnowledgeInboxSettings;
+		this.settings = {
+			...DEFAULTS,
+			...extraction.sanitizedSettings,
+		};
 		let settingsChanged = extraction.hadLegacySecrets;
 
 		if (extraction.legacySecrets.sttApiKey) {
@@ -336,7 +335,7 @@ export default class KnowledgeInboxPlugin extends Plugin {
 	 */
 	private async processSelectedText(text: string, file: TFile): Promise<void> {
 		try {
-			const source = this.app.metadataCache.getFileCache(file)?.frontmatter?.source;
+			const source: unknown = this.app.metadataCache.getFileCache(file)?.frontmatter?.source;
 			const sourceType: TextSourceType = source === "external-transcript"
 				? "external-transcript"
 				: "written";
@@ -917,7 +916,7 @@ export default class KnowledgeInboxPlugin extends Plugin {
 		const template = await this.app.vault.cachedRead(templateFile);
 		const rendered = renderTemplate(template, context);
 		if (insertionTokens.some((token) => template.includes(token))) return rendered;
-		return `${rendered.trimEnd()}\n\n${appendWhenMissing}\n`;
+		return `${rendered.replace(/\s+$/, "")}\n\n${appendWhenMissing}\n`;
 	}
 
 	/**
@@ -967,7 +966,6 @@ export default class KnowledgeInboxPlugin extends Plugin {
 		const boundary = "----AiInbox" + Math.random().toString(36).slice(2);
 		const enc = new TextEncoder();
 		const buf = await finalBlob.arrayBuffer();
-		const sizeKB = Math.round(buf.byteLength / 1024);
 
 		const parts: Uint8Array[] = [];
 		const line = (s: string) => parts.push(enc.encode(s));
@@ -1363,6 +1361,6 @@ class KnowledgeInboxSettingTab extends PluginSettingTab {
 	}
 }
 
-function pad(n: number): string { const s: string = n.toString(); return s.padStart(2, "0"); }
+function pad(n: number): string { const s: string = n.toString(); return s.length < 2 ? "0" + s : s; }
 function fmtDate(d: Date) { return `${d.getFullYear()}-${pad(d.getMonth() + 1)}-${pad(d.getDate())}`; }
 function fmtTime(d: Date) { return `${pad(d.getHours())}-${pad(d.getMinutes())}-${pad(d.getSeconds())}`; }
