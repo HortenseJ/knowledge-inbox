@@ -56,7 +56,7 @@ export class TaskCenterModal extends Modal {
 			header.createEl("strong", {
 				text: job.kind === "audio" ? "录音任务" : "文本任务",
 			});
-			header.createEl("span", {
+			header.createSpan({
 				text: STATUS_LABELS[job.status],
 				cls: `knowledge-inbox-task-status is-${job.status}`,
 			});

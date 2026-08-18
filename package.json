@@ -1,6 +1,6 @@
 {
   "name": "obsidian-knowledge-inbox",
-  "version": "0.1.2",
+  "version": "0.1.3",
   "description": "Capture voice or text, organize it with AI, and route structured notes across an Obsidian vault.",
   "main": "main.js",
   "scripts": {

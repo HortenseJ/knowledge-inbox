@@ -1,5 +1,11 @@
 # Changelog
 
+## [0.1.3] - 2026-08-18
+
+### Fixes
+
+- Use the Obsidian `createSpan` helper instead of `createEl("span")` to satisfy the community plugin review lint.
+
 ## [0.1.2] - 2026-08-18
 
 ### Fixes
